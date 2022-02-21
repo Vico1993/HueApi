@@ -1,5 +1,5 @@
 {
-    "name": "basic-ts-repo",
+    "name": "hue-api",
     "version": "1.0.0",
     "main": "build/index.js",
     "types": "build/index.d.ts",
@@ -7,7 +7,7 @@
     "files": [
         "build"
     ],
-    "repository": "git@github.com:vico1993/basic-ts-repo.git",
+    "repository": "git@github.com:vico1993/hueapi.git",
     "scripts": {
         "build": "tsc -p tsconfig.json",
         "test": "jest",
@@ -28,5 +28,11 @@
         "ts-jest": "^26.5.4",
         "ts-node": "^9.1.1",
         "typescript": "^4.5.5"
+    },
+    "dependencies": {
+        "@types/express": "^4.17.13",
+        "dotenv": "^16.0.0",
+        "express": "^4.17.3",
+        "node-hue-api": "^5.0.0-beta.13"
     }
 }
