@@ -38,5 +38,23 @@ export const activateScene = asyncHandler(async (req, res) => {
 
     await client.scenes.activateScene(scene[0].id as string);
 
-    res.status(200).json();
+    res.status(200).json({
+        success: true,
+    });
+});
+
+export const getScene = asyncHandler(async (req, res) => {
+    const sceneName = req.params.name;
+
+    const client = await v3.api
+        .createLocal(process.env.HUE_BRIDGE_IP)
+        .connect(process.env.HUE_BRIDGE_USERNAME);
+
+    const scene = await client.scenes.getSceneByName(sceneName);
+
+    if (!scene) {
+        res.sendStatus(404);
+    }
+
+    res.status(200).json(scene);
 });
