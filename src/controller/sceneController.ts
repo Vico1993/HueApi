@@ -1,10 +1,21 @@
-import { v3 } from "node-hue-api";
+import { model, v3 } from "node-hue-api";
 import asyncHandler from "../middleware/async";
 
-// type sceneOutput = {
-//     name: string;
-//     id: string;
-// };
+type sceneOutput = {
+    id: string;
+    name: string;
+    group: {
+        name: string;
+    };
+};
+
+type groups = {
+    [key: number]: {
+        name: string;
+    };
+};
+
+const groups: groups = {};
 
 export const getAllScenes = asyncHandler(async (req, res) => {
     const client = await v3.api
@@ -13,12 +24,26 @@ export const getAllScenes = asyncHandler(async (req, res) => {
 
     const scenes = await client.scenes.getAll();
 
-    const response = scenes.map((scene) => {
-        return {
-            id: scene.id,
+    const response: sceneOutput[] = [];
+    for (const scene of scenes) {
+        const groupId = (scene as model.GroupScene).group;
+
+        if (!groups[groupId]) {
+            const apiGroups = await client.groups.getGroup(
+                parseInt(groupId, 10)
+            );
+
+            groups[groupId] = {
+                name: apiGroups.name,
+            };
+        }
+
+        response.push({
+            id: scene.id as string,
             name: scene.name,
-        };
-    });
+            group: groups[groupId],
+        });
+    }
 
     res.status(200).json(response);
 });
