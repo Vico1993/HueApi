@@ -1,6 +1,6 @@
 name: Basic CI
 
-on: pull_request
+on: push
 
 env:
     NODE_VERSION: 16.x

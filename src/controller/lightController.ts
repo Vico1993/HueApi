@@ -1,4 +1,3 @@
-import { Request } from "express";
 import { v3 } from "node-hue-api";
 import asyncHandler from "../middleware/async";
 
