@@ -1,81 +1,36 @@
-import { model, v3 } from "node-hue-api";
+import { Response } from "express";
+import { HueRequest } from "../domain/express/type";
+import {
+    activateSceneByName,
+    fetchScenes,
+    getSceneByName,
+} from "../domain/scene/behavior";
 import asyncHandler from "../middleware/async";
 
-type sceneOutput = {
-    id: string;
-    name: string;
-    group: {
-        name: string;
-    };
-};
+export const getAllScenes = asyncHandler(
+    async (req: HueRequest, res: Response) => {
+        res.status(200).json(await fetchScenes(req.hueClient));
+    }
+);
 
-type groups = {
-    [key: number]: {
-        name: string;
-    };
-};
+export const activateScene = asyncHandler(
+    async (req: HueRequest, res: Response) => {
+        const scene = await getSceneByName(req.hueClient, req.params.name);
 
-const groups: groups = {};
-
-export const getAllScenes = asyncHandler(async (req, res) => {
-    const client = await v3.api
-        .createLocal(process.env.HUE_BRIDGE_IP)
-        .connect(process.env.HUE_BRIDGE_USERNAME);
-
-    const scenes = await client.scenes.getAll();
-
-    const response: sceneOutput[] = [];
-    for (const scene of scenes) {
-        const groupId = (scene as model.GroupScene).group;
-
-        if (!groups[groupId]) {
-            const apiGroups = await client.groups.getGroup(
-                parseInt(groupId, 10)
-            );
-
-            groups[groupId] = {
-                name: apiGroups.name,
-            };
+        if (!scene) {
+            res.sendStatus(404);
         }
 
-        response.push({
-            id: scene.id as string,
-            name: scene.name,
-            group: groups[groupId],
+        await activateSceneByName(req.hueClient, scene[0]);
+
+        res.status(200).json({
+            success: true,
         });
     }
+);
 
-    res.status(200).json(response);
-});
-
-export const activateScene = asyncHandler(async (req, res) => {
-    const sceneName = req.params.name;
-
-    const client = await v3.api
-        .createLocal(process.env.HUE_BRIDGE_IP)
-        .connect(process.env.HUE_BRIDGE_USERNAME);
-
-    const scene = await client.scenes.getSceneByName(sceneName);
-
-    if (!scene) {
-        res.sendStatus(404);
-    }
-
-    await client.scenes.activateScene(scene[0].id as string);
-
-    res.status(200).json({
-        success: true,
-    });
-});
-
-export const getScene = asyncHandler(async (req, res) => {
-    const sceneName = req.params.name;
-
-    const client = await v3.api
-        .createLocal(process.env.HUE_BRIDGE_IP)
-        .connect(process.env.HUE_BRIDGE_USERNAME);
-
-    const scene = await client.scenes.getSceneByName(sceneName);
+export const getScene = asyncHandler(async (req: HueRequest, res: Response) => {
+    const scene = await getSceneByName(req.hueClient, req.params.name);
 
     if (!scene) {
         res.sendStatus(404);
