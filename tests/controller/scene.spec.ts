@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment */
 import { Request, Response } from "express";
 import { model } from "node-hue-api";
 import { Api } from "node-hue-api/dist/esm/api/Api";
@@ -17,14 +18,12 @@ const mockRequest = {
 
 const res = {
     status: function (code = 200) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         this.statusCode = code;
         return this;
     },
     statusCode: 0,
     json: jest.fn(),
     sendStatus: function (code = 200) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         this.statusCode = code;
         return this;
     },

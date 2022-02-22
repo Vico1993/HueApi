@@ -4,7 +4,7 @@ import {
     activateByName,
     fetchAll,
 } from "../../../src/domain/scene/behavior";
-import { api, model } from "node-hue-api";
+import { model } from "node-hue-api";
 
 const getAllMock = jest.fn();
 const getGroupMock = jest.fn();
@@ -49,7 +49,7 @@ describe("activateSceneByName", () => {
             await activateByName(apiMock, {
                 id: "123",
             } as model.GroupScene)
-        ).toBeUndefined;
+        ).toBeUndefined();
     });
 });
 
