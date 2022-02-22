@@ -7,6 +7,7 @@ import sceneRouter from "./routes/scene";
 
 // Middleware
 import { setupHueClient } from "./middleware/hueClient";
+import { errorHandler } from "./middleware/errorhandler";
 
 // Load .env variables
 config();
@@ -18,6 +19,8 @@ app.use(setupHueClient);
 
 app.use("/light", lightRouter);
 app.use("/scene", sceneRouter);
+
+app.use(errorHandler);
 
 app.listen(port, () => {
     console.log(`Server started on ${port}`);

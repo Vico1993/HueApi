@@ -1,5 +1,5 @@
 import express = require("express");
-import { getAllLights } from "../controller/lightController";
+import { getAllLights } from "../controller/light";
 
 const lightRouter = express.Router();
 

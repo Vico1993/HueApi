@@ -1,9 +1,5 @@
 import express = require("express");
-import {
-    activateScene,
-    getAllScenes,
-    getScene,
-} from "../controller/sceneController";
+import { activateScene, getAllScenes, getScene } from "../controller/scene";
 
 const sceneRouter = express.Router();
 

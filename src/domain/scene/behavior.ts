@@ -4,7 +4,7 @@ import { sceneGroups, sceneOutput, sceneGroup } from "./type";
 
 const groups: sceneGroups = {};
 
-export const fetchScenes = async (client: Api): Promise<sceneOutput[]> => {
+export const fetchAll = async (client: Api): Promise<sceneOutput[]> => {
     const scenes = await client.scenes.getAll();
 
     const response: sceneOutput[] = [];
@@ -31,16 +31,13 @@ export const fetchScenes = async (client: Api): Promise<sceneOutput[]> => {
     return response;
 };
 
-export const getSceneByName = async (
+export const fetchByName = async (
     client: Api,
     name: string
 ): Promise<model.GroupScene[]> => {
     return (await client.scenes.getSceneByName(name)) as model.GroupScene[];
 };
 
-export const activateSceneByName = async (
-    client: Api,
-    scene: model.GroupScene
-) => {
+export const activateByName = async (client: Api, scene: model.GroupScene) => {
     await client.scenes.activateScene(scene.id as string);
 };
