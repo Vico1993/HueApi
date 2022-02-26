@@ -1,5 +1,6 @@
 import express from "express";
 import { config } from "dotenv";
+import logger from "morgan";
 
 // Router
 import lightRouter from "./routes/light";
@@ -15,6 +16,19 @@ config();
 
 const app = express();
 const port = process.env.API_PORT || 8080;
+
+app.use(
+    logger((tokens, req, res) => {
+        return [
+            tokens.method(req, res),
+            tokens.url(req, res),
+            tokens.status(req, res),
+            `Content-Length: ${tokens.res(req, res, "content-length")}`,
+            "-",
+            `Response Time: ${tokens["response-time"](req, res)}`,
+        ].join(" ");
+    })
+);
 
 app.use(setupHueClient);
 
