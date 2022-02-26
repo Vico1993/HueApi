@@ -1,10 +1,11 @@
-import { v3 } from "node-hue-api";
+import { Response } from "express";
 import asyncHandler from "../middleware/async";
+import { HueRequest } from "../domain/express/type";
 
-export const getAllLights = asyncHandler(async (req, res) => {
-    const client = await v3.api
-        .createLocal(process.env.HUE_BRIDGE_IP)
-        .connect(process.env.HUE_BRIDGE_USERNAME);
+export const getAllLights = asyncHandler(
+    async (req: HueRequest, res: Response) => {
+        const lights = await req.hueClient.lights.getAll();
 
-    res.status(200).json(await client.lights.getAll());
-});
+        res.status(200).json(lights);
+    }
+);

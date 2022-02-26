@@ -1,10 +1,6 @@
 import { Response } from "express";
 import { HueRequest } from "../domain/express/type";
-import {
-    activateByName,
-    fetchAll,
-    fetchByName,
-} from "../domain/scene/behavior";
+import { activateByName, fetchAll, fetchByName } from "../domain/scene";
 import asyncHandler from "../middleware/async";
 
 export const getAllScenes = asyncHandler(
