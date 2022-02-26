@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "28eb3036-26ad-403e-a298-fbdb615a14a5",
+		"name": "Hue Noe Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Scene",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/scene",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"scene"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Scene by Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{base_server_url}}/scene/Movie",
+					"protocol": "http",
+					"host": [
+						"{{base_server_url}}"
+					],
+					"path": [
+						"scene",
+						"Movie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Activate a Scene by Name",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://{{base_server_url}}/scene/Movie",
+					"protocol": "http",
+					"host": [
+						"{{base_server_url}}"
+					],
+					"path": [
+						"scene",
+						"Movie"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_server_url",
+			"value": "localhost:8080",
+			"type": "string"
+		}
+	]
+}
