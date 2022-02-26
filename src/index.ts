@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { config } from "dotenv";
 import logger from "morgan";
 
@@ -18,7 +18,7 @@ const app = express();
 const port = process.env.API_PORT || 8080;
 
 app.use(
-    logger((tokens, req, res) => {
+    logger((tokens, req: Request, res: Response) => {
         return [
             tokens.method(req, res),
             tokens.url(req, res),

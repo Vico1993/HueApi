@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextFunction, Request, Response } from "express";
 
 export const errorHandler = (
@@ -6,8 +7,6 @@ export const errorHandler = (
     res: Response,
     next: NextFunction
 ): void => {
-    console.log("JELLO", err.message);
-
     res.status(500).json({
         error: err.message,
     });
