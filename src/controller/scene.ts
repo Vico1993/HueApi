@@ -20,9 +20,7 @@ export const activateScene = asyncHandler(
 
         await activateByName(req.hueClient, scene[0]);
 
-        res.status(200).json({
-            success: true,
-        });
+        res.sendStatus(200);
     }
 );
 

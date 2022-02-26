@@ -78,14 +78,7 @@ describe("activateScene", () => {
 
         await activateScene(mockRequest, res as Response);
 
-        // @ts-ignore
-        // Rules : @typescript-eslint/no-unsafe-member-access && @typescript-eslint/no-unsafe-assignment
-        // For now it's impossible to remove the type any for .mock and .calls
-        const mockResponse = res.json.mock.calls[0][0];
-
-        expect(mockResponse).toMatchObject({
-            success: true,
-        });
+        expect(res.statusCode).toBe(200);
     });
 
     it("Scene not found", async () => {

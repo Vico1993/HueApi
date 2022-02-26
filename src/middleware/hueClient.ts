@@ -8,9 +8,12 @@ export const setupHueClient = async (
     next: NextFunction
 ) => {
     try {
-        req.hueClient = await v3.api
-            .createLocal(process.env.HUE_BRIDGE_IP)
-            .connect(process.env.HUE_BRIDGE_USERNAME);
+        // Exclude HueClient for Swagger documentation
+        if (!req.url.includes("/api-docs/")) {
+            req.hueClient = await v3.api
+                .createLocal(process.env.HUE_BRIDGE_IP)
+                .connect(process.env.HUE_BRIDGE_USERNAME);
+        }
     } catch (error) {
         res.status(500).json({
             message: `Error setting up the HueClient ${
