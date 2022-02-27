@@ -1,18 +1,22 @@
 {
     "name": "hue-api",
     "version": "1.0.0",
-    "main": "build/index.js",
-    "types": "build/index.d.ts",
+    "main": "build/src/index.js",
+    "types": "build/src/index.d.ts",
     "license": "MIT",
     "files": [
         "build"
     ],
     "repository": "git@github.com:vico1993/hueapi.git",
     "scripts": {
+        "prestart": "npm run build",
+        "start": "node .",
         "build": "tsc -p tsconfig.json",
         "test": "jest",
         "watch": "nodemon --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"ts-node src/index.ts\"",
-        "lint": "eslint --ext .ts ."
+        "lint": "eslint --ext .ts .",
+        "getHueIp": "npx ts-node src/scripts/getHueIp.ts",
+        "createUser": "npx ts-node src/scripts/createUser.ts"
     },
     "devDependencies": {
         "@types/express": "^4.17.13",
